@@ -12,7 +12,7 @@ public interface BlogDAO {
 	
 	public Blog updateBlog(Blog blog);
 	
-	public List<Blog> searchBlogs(String keyword);
+	/*public List<Blog> searchBlogs(String keyword);
 	
 	public Blog viewBlog(int blogId);
 	
@@ -26,6 +26,6 @@ public interface BlogDAO {
 	
 	public void replyOnComment(int commentId, Reply reply);
 	
-	
+	*/
 
 }

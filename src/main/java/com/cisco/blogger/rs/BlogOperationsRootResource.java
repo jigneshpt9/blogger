@@ -72,7 +72,7 @@ public class BlogOperationsRootResource {
 
 	}
 
-	@GET
+/*	@GET
 	@Path("/view/{blogId}")
 	@Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
@@ -162,5 +162,5 @@ public class BlogOperationsRootResource {
 		}
 
 	}
-
+*/
 }

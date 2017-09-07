@@ -12,12 +12,13 @@ public interface BlogDAO {
 	
 	public Blog updateBlog(Blog blog);
 	public Blog viewBlog(int blogId);
+	public List<Blog> listAllBlogs();
 	
 	/*public List<Blog> searchBlogs(String keyword);
 	
 	
 	
-	public List<Blog> listAllBlogs();
+	
 	
 	public void addComment(int blogId,Comment comment);
 	

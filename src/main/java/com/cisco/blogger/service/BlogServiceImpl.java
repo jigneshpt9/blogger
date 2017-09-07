@@ -29,16 +29,17 @@ public class BlogServiceImpl implements BlogService {
 		return blogDAO.viewBlog(blogId);
 	}
 
+	public List<Blog> listAllBlogs() {
+
+		return blogDAO.listAllBlogs();
+	}
 
 	/*public List<Blog> searchBlogs(String keyword) {
 		return blogDAO.searchBlogs(keyword);
 	}
 
 	
-	public List<Blog> listAllBlogs() {
-
-		return blogDAO.listAllBlogs();
-	}
+	
 
 	public void addComment(int blogId, Comment comment) {
 

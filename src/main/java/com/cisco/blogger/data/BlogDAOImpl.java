@@ -52,7 +52,7 @@ public class BlogDAOImpl implements BlogDAO {
 		blog1.setTitle("CMAD5");
 		return blog1;
 	}
-}
+
 	/*
 	public List<Blog> searchBlogs(String keyword) {
 		System.out.println("In search method for keyword:" + keyword);
@@ -69,18 +69,35 @@ public class BlogDAOImpl implements BlogDAO {
 
 
 
-	/*
+
 	public List<Blog> listAllBlogs() {
-		List<Blog> blogList = em.createQuery("SELECT b FROM Blog b").getResultList();
+	/*	List<Blog> blogList = em.createQuery("SELECT b FROM Blog b").getResultList();
 
 		if (null != blogList && !blogList.isEmpty()) {
 			return blogList;
 		} else {
 			return null;
-		}
+		}*/
+		List<Blog> blogList = new ArrayList();
+		
+		Blog b = new Blog();
+		b.setBlogId(1);
+		b.setTitle("Blog 1");
+		b.setContent(" Blog 1 test");
+		
+		
+		blogList.set(0, b);
+		
+		b.setBlogId(1);
+		b.setTitle("Blog 2");
+		b.setContent(" Blog 2 test");
+		
+		blogList.set(0, b);
+		
+		return blogList;
 	}
-
-	public void addComment(int blogId, Comment comment) {
+}
+/*	public void addComment(int blogId, Comment comment) {
 		Blog blog = viewBlog(blogId);
 		List<Comment> comments = blog.getComments();
 

@@ -43,6 +43,15 @@ public class BlogDAOImpl implements BlogDAO {
 		System.out.println("BlogUpdated-" + blog.getBlogId());
 		return blog;
 	}
+	
+	public Blog viewBlog(int blogId) {
+		//Blog blogSearch = em.find(Blog.class, blogId);
+		Blog blog1 = new Blog();
+		blog1.setBlogId(1);
+		blog1.setContent("hi this is my blog");
+		blog1.setTitle("CMAD5");
+		return blog1;
+	}
 }
 	/*
 	public List<Blog> searchBlogs(String keyword) {
@@ -56,13 +65,11 @@ public class BlogDAOImpl implements BlogDAO {
 
 
 		return blogSearchList;
-	}
+	}*/
 
-	public Blog viewBlog(int blogId) {
-		Blog blogSearch = em.find(Blog.class, blogId);
-		return blogSearch;
-	}
 
+
+	/*
 	public List<Blog> listAllBlogs() {
 		List<Blog> blogList = em.createQuery("SELECT b FROM Blog b").getResultList();
 

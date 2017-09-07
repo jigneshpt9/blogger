@@ -24,15 +24,17 @@ public class BlogServiceImpl implements BlogService {
 		Blog updatedBlog = blogDAO.updateBlog(blog);
 		return updatedBlog;
 	}
+	
+	public Blog viewBlog(int blogId) {
+		return blogDAO.viewBlog(blogId);
+	}
+
 
 	/*public List<Blog> searchBlogs(String keyword) {
 		return blogDAO.searchBlogs(keyword);
 	}
 
-	public Blog viewBlog(int blogId) {
-		return blogDAO.viewBlog(blogId);
-	}
-
+	
 	public List<Blog> listAllBlogs() {
 
 		return blogDAO.listAllBlogs();

@@ -11,10 +11,12 @@ public interface BlogService {
 	public int createBlog(Blog blog);
 	
 	public Blog updateBlog(Blog blog);
+	
+	public Blog viewBlog(int blogId);
 	/*
 	public List<Blog> searchBlogs(String keyword);
 	
-	public Blog viewBlog(int blogId);
+	
 	
 	public List<Blog> listAllBlogs();
 	

@@ -78,7 +78,7 @@ public class BlogDAOImpl implements BlogDAO {
 		} else {
 			return null;
 		}*/
-		List<Blog> blogList = new ArrayList();
+		List<Blog> blogList = new ArrayList<Blog>();
 		
 		Blog b = new Blog();
 		b.setBlogId(1);
@@ -86,13 +86,13 @@ public class BlogDAOImpl implements BlogDAO {
 		b.setContent(" Blog 1 test");
 		
 		
-		blogList.set(0, b);
+		blogList.add(1, b);
 		
-		b.setBlogId(1);
+		b.setBlogId(2);
 		b.setTitle("Blog 2");
 		b.setContent(" Blog 2 test");
 		
-		blogList.set(0, b);
+		blogList.add(2, b);
 		
 		return blogList;
 	}

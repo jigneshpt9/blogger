@@ -18929,7 +18929,7 @@ var Home = function (_React$Component) {
       var _this3 = this;
 
       var list = this.state.list.map(function (item, index) {
-        return _react2.default.createElement(_listComponent2.default, { key: index, onClick: blogSelected.bind(_this3, index), heading: item.title, content: item.content });
+        return _react2.default.createElement(_listComponent2.default, { key: index, onClick: _this3.blogSelected.bind(_this3, index), heading: item.title, content: item.content });
       });
       return list;
     }

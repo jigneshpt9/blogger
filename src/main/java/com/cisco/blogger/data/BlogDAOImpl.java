@@ -86,13 +86,13 @@ public class BlogDAOImpl implements BlogDAO {
 		b.setContent(" Blog 1 test");
 		
 		
-		blogList.add(1, b);
+		blogList.add(b);
 		
 		b.setBlogId(2);
 		b.setTitle("Blog 2");
 		b.setContent(" Blog 2 test");
 		
-		blogList.add(2, b);
+		blogList.add(b);
 		
 		return blogList;
 	}

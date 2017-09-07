@@ -80,19 +80,19 @@ public class BlogDAOImpl implements BlogDAO {
 		}*/
 		List<Blog> blogList = new ArrayList<Blog>();
 		
-		Blog b = new Blog();
-		b.setBlogId(1);
-		b.setTitle("Blog 1");
-		b.setContent(" Blog 1 test");
+		Blog b1 = new Blog();
+		b1.setBlogId(1);
+		b1.setTitle("Blog 1");
+		b1.setContent(" Blog 1 test");
 		
 		
-		blogList.add(b);
+		blogList.add(b1);
+		Blog b2 = new Blog();
+		b2.setBlogId(2);
+		b2.setTitle("Blog 2");
+		b2.setContent(" Blog 2 test");
 		
-		b.setBlogId(2);
-		b.setTitle("Blog 2");
-		b.setContent(" Blog 2 test");
-		
-		blogList.add(b);
+		blogList.add(b2);
 		
 		return blogList;
 	}

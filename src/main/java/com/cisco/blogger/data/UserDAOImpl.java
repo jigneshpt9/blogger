@@ -8,14 +8,14 @@ import com.cisco.blogger.api.User;
 import com.mongodb.Mongo;
 import com.mongodb.MongoClient;
 
-public class UserDAOImpl_mongo implements UserDAO {
+public class UserDAOImpl implements UserDAO {
 
 	 static String dbName = new String("bloggerDb");    
 	 static MongoClient mongo = new MongoClient("172.31.34.32");
      static Morphia morphia = new Morphia();
      static Datastore datastore = morphia.createDatastore( mongo, dbName); 	     
 	
-	public UserDAOImpl_mongo() {
+	public UserDAOImpl() {
 		    
 		     morphia.mapPackage("com.cisco.blogger.data");
 		         

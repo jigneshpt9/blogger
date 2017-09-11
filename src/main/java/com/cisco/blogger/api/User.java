@@ -1,11 +1,13 @@
 package com.cisco.blogger.api;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import org.mongodb.morphia.annotations.Entity;
+import org.mongodb.morphia.annotations.Id;
+import org.mongodb.morphia.annotations.Property;
 
 @Entity
 public class User {
 	@Id
+	@Property("_id")
 	private String emailId;
 	private String firstName;
 	private String lastName;

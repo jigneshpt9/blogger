@@ -8,26 +8,15 @@ import com.cisco.blogger.api.Reply;
 
 public interface BlogDAO {
 	
-	public int createBlog(Blog blog);
+	public String createBlog(Blog blog);
 	
-	public Blog updateBlog(Blog blog);
-	public Blog viewBlog(int blogId);
+	public void updateBlog(Blog blog);
+	public Blog getBlogById(String blogId);
 	public List<Blog> listAllBlogs();
 	
-	/*public List<Blog> searchBlogs(String keyword);
+	public List<Blog> searchBlogs(String keyword);
+	
+	public void addComment(String blogId,Comment comment);
 	
 	
-	
-	
-	
-	public void addComment(int blogId,Comment comment);
-	
-	public int upvoteComment(int commentId);
-	
-	public int undoLikeComment(int commentId);
-	
-	public void replyOnComment(int commentId, Reply reply);
-	
-	*/
-
 }

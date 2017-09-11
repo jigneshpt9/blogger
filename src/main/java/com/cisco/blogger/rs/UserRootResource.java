@@ -20,7 +20,7 @@ import com.cisco.blogger.service.UserServiceImpl;
 @Path("/user")
 public class UserRootResource {
 	
-	UserService userService = new UserServiceImpl();
+	UserService userService = UserServiceImpl.getInstance();
 	
 	@POST
 	@Consumes({ MediaType.APPLICATION_JSON})

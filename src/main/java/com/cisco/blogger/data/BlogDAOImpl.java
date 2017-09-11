@@ -1,104 +1,94 @@
 package com.cisco.blogger.data;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.persistence.Query;
+import java.util.logging.Logger;
 
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Morphia;
+import org.mongodb.morphia.dao.BasicDAO;
+import org.mongodb.morphia.query.Query;
 
 import com.cisco.blogger.api.Blog;
 import com.cisco.blogger.api.Comment;
-import com.cisco.blogger.api.Reply;
 import com.mongodb.MongoClient;
 
-public class BlogDAOImpl implements BlogDAO {
+public class BlogDAOImpl extends BasicDAO<Blog, String> implements BlogDAO {
+	private Logger logger = Logger.getLogger(getClass().getName());
 
-	static String dbName = new String("bloggerDb");    
-	static MongoClient mongo = new MongoClient("172.31.34.32");
-    static Morphia morphia = new Morphia();
-    static Datastore datastore = morphia.createDatastore( mongo, dbName); 	     
+	private static String dbName = new String("BloggerDb");
+	private static MongoClient mongo = new MongoClient("localhost");
+	private static Morphia morphia = new Morphia();
+	private static Datastore datastore = morphia.createDatastore(mongo, dbName);
+
+	private BlogDAOImpl() {
+		this(Blog.class, datastore);
+	}
+
+	private BlogDAOImpl(Class<Blog> entityClass, Datastore ds) {
+		super(entityClass, ds);
+	}
+
+	private static BlogDAO dao = null;
+
+  
+
+    public static BlogDAOImpl getInstance() {
+        if (dao == null) {
+            dao = new BlogDAOImpl();
+        }
+        return (BlogDAOImpl) dao;
+}
 	
 
-	public BlogDAOImpl() {
+	@Override
+	public String createBlog(Blog blog) {
 
-	    morphia.mapPackage("com.cisco.blogger.data");
-	}
-
-	public int createBlog(Blog blog) {
-
-	    datastore.save(blog);
-	    System.out.println("BlogCreated" + blog.getBlogId());
-		return blog.getBlogId();
+		save(blog);
+		System.out.println("BlogCreated" + blog.getId());
+		return blog.getId();
 
 	}
 
-	public Blog updateBlog(Blog blog) {
-
-		datastore.save(blog);
-		System.out.println("BlogUpdated-" + blog.getBlogId());
+	@Override
+	public Blog getBlogById(String blogId) {
+		Blog blog = get(blogId);
 		return blog;
 	}
-	
-	public Blog viewBlog(int blogId) {
-		//Blog blogSearch = em.find(Blog.class, blogId);
-		Blog blog1 = new Blog();
-		blog1.setBlogId(1);
-		blog1.setContent("hi this is my blog");
-		blog1.setTitle("CMAD5");
-		return blog1;
+
+	@Override
+	public void updateBlog(Blog blog) {
+		Blog blogFound = getBlogById(blog.getId());
+		if (null != blogFound) {
+			logger.info("BlogUpdated-" + blog.getId());
+
+		} else {
+			logger.info("new blog inserted to DB through UPDATE process");
+		}
+		save(blog);
 	}
 
-	/*
+	@Override
 	public List<Blog> searchBlogs(String keyword) {
-		System.out.println("In search method for keyword:" + keyword);
+		logger.info("In search method for keyword:" + keyword);
 		List<Blog> blogSearchList = null;
 
-		Query searchQuery = em
-				.createQuery("SELECT b FROM Blog b WHERE (b.title LIKE :keyword OR b.content LIKE :keyword)");
-		searchQuery.setParameter("keyword", "%" + keyword + "%");
-     List<Blog> blogSearchList = null;
-
+		Query<Blog> query = createQuery().field("content").contains(keyword);
+		blogSearchList = query.asList();
 
 		return blogSearchList;
-	}*/
 
+	}
 
-
-
+	@Override
 	public List<Blog> listAllBlogs() {
-	/*	List<Blog> blogList = em.createQuery("SELECT b FROM Blog b").getResultList();
 
-		if (null != blogList && !blogList.isEmpty()) {
-			return blogList;
-		} else {
-			return null;
-		}*/
-		List<Blog> blogList = new ArrayList<Blog>();
-		
-		Blog b1 = new Blog();
-		b1.setBlogId(1);
-		b1.setTitle("Blog 1");
-		b1.setContent(" Blog 1 test");
-		
-		
-		blogList.add(b1);
-		Blog b2 = new Blog();
-		b2.setBlogId(2);
-		b2.setTitle("Blog 2");
-		b2.setContent(" Blog 2 test");
-		
-		blogList.add(b2);
-		
+		List<Blog> blogList = createQuery().order("lastUpdated").asList();
 		return blogList;
 	}
-}
-/*	public void addComment(int blogId, Comment comment) {
-		Blog blog = viewBlog(blogId);
+
+	@Override
+	public void addComment(String blogId, Comment comment) {
+		Blog blog = getBlogById(blogId);
 		List<Comment> comments = blog.getComments();
 
 		comments.add(comment);
@@ -106,26 +96,4 @@ public class BlogDAOImpl implements BlogDAO {
 
 	}
 
-	public int upvoteComment(int commentId) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	public int undoLikeComment(int commentId) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public void replyOnComment(int commentId, Reply reply) {
-		Comment comment = em.find(Comment.class, commentId);
-		comment.getReplyList().add(reply);
-
-		em.getTransaction().begin();
-		em.merge(comment);
-		em.getTransaction().commit();
-
-	}
-
 }
-*/

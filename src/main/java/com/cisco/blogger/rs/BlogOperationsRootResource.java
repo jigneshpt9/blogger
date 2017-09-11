@@ -16,7 +16,6 @@ import com.cisco.blogger.api.BlogCreateException;
 import com.cisco.blogger.api.BlogException;
 import com.cisco.blogger.api.BlogUpdateException;
 import com.cisco.blogger.api.Comment;
-import com.cisco.blogger.api.Reply;
 import com.cisco.blogger.api.User;
 import com.cisco.blogger.service.BlogService;
 import com.cisco.blogger.service.BlogServiceImpl;
@@ -26,8 +25,8 @@ import com.cisco.blogger.service.UserServiceImpl;
 @Path("/blog")
 public class BlogOperationsRootResource {
 
-	BlogService blogService = new BlogServiceImpl();
-	UserService userService = new UserServiceImpl();
+	BlogService blogService =  BlogServiceImpl.getInstance();
+	UserService userService =  UserServiceImpl.getInstance();
 
 	@POST
 	@Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
@@ -36,7 +35,7 @@ public class BlogOperationsRootResource {
 		try {
 			User userObject = userService.findUser(blog.getBlogOwner().getEmailId());
 			blog.setBlogOwner(userObject);
-			int blogId = blogService.createBlog(blog);
+			String blogId = blogService.createBlog(blog);
 
 			return Response.ok().entity(blog).header("location", "/blogger/blog/view/" + blogId).build();
 
@@ -57,12 +56,12 @@ public class BlogOperationsRootResource {
 			User userObject = userService.findUser(blog.getBlogOwner().getEmailId());
 			Blog blogUpdated = null;
 			if (null != userObject) {
-				blogUpdated = blogService.updateBlog(blog);
+				blogService.updateBlog(blog);
 			} else {
 				throw new BlogUpdateException("No blog found in database");
 			}
 
-			return Response.ok().entity(blog).header("location", "/blogger/blog/view/" + blogUpdated.getBlogId())
+			return Response.ok().entity(blog).header("location", "/blogger/blog/view/" + blogUpdated.getId())
 					.build();
 		} catch (BlogUpdateException bue) {
 			return Response.status(400).build();
@@ -76,9 +75,9 @@ public class BlogOperationsRootResource {
 	@Path("/view/{blogId}")
 	@Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	public Response getBlogById(@PathParam("blogId") int blogId) {
+	public Response getBlogById(@PathParam("blogId") String blogId) {
 		try {
-			Blog blog = blogService.viewBlog(blogId);
+			Blog blog = blogService.getBlogById(blogId);
 
 			return Response.ok().entity(blog).build();
 
@@ -106,7 +105,7 @@ public class BlogOperationsRootResource {
 		}
 
 	}
-/*
+
 	@GET
 	@Path("/{keyWord}")
 	@Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
@@ -129,7 +128,7 @@ public class BlogOperationsRootResource {
 	@Path("/comment/{blogId}")
 	@Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	public Response addComment(@PathParam("blogId") int blogId, Comment comment) {
+	public Response addComment(@PathParam("blogId") String blogId, Comment comment) {
 		try {
 
 			blogService.addComment(blogId, comment);
@@ -144,23 +143,5 @@ public class BlogOperationsRootResource {
 
 	}
 	
-	@POST
-	@Path("/reply/{commentId}")
-	@Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	public Response replyOnComment(@PathParam("commentId") int commentId, Reply reply) {
-		try {
 
-			blogService.replyOnComment(commentId, reply);
-
-			return Response.status(200).build();
-
-		} catch (BlogCreateException bce) {
-			return Response.status(400).build();
-		} catch (BlogException be) {
-			return Response.status(500).build();
-		}
-
-	}
-*/
 }

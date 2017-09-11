@@ -1,40 +1,40 @@
 package com.cisco.blogger.api;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import org.mongodb.morphia.annotations.Entity;
+import org.mongodb.morphia.annotations.Id;
+import org.mongodb.morphia.annotations.PrePersist;
+import org.mongodb.morphia.annotations.Property;
+
+
 
 @Entity
 public class Blog {
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	
 	@Id
-	private int blogId;
+	@Property("_id")
+	private String id;
 	private String title;
-	private String createTime;
-	private String lastUpdate;
+	private Date lastUpdated;
 	private String content;
 	private int likeCount;
-	@ManyToOne(cascade = { CascadeType.MERGE })
 	private User blogOwner;
-	@OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER, mappedBy = "blog")
 	private List<Comment> comments;
-	@OneToMany(cascade = { CascadeType.ALL })
-	private List<Image> imageList;
-
-	public int getBlogId() {
-		return blogId;
+	
+	@PrePersist
+    public void prePersist() {
+        this.lastUpdated = new Date();
+}
+	
+	public String getId() {
+		return id;
 	}
 
-	public void setBlogId(int blogId) {
-		this.blogId = blogId;
+	public void setBlogId(String id) {
+		this.id = id;
 	}
 
 	public String getTitle() {
@@ -45,20 +45,13 @@ public class Blog {
 		this.title = title;
 	}
 
-	public String getCreateTime() {
-		return createTime;
+
+	public Date getLastUpdated() {
+		return lastUpdated;
 	}
 
-	public void setCreateTime(String createTime) {
-		this.createTime = createTime;
-	}
-
-	public String getLastUpdate() {
-		return lastUpdate;
-	}
-
-	public void setLastUpdate(String lastUpdate) {
-		this.lastUpdate = lastUpdate;
+	public void setLastUpdate(Date lastUpdated) {
+		this.lastUpdated = lastUpdated;
 	}
 
 	public String getContent() {
@@ -96,12 +89,5 @@ public class Blog {
 		this.comments = comments;
 	}
 
-	public List<Image> getImageList() {
-		return imageList;
-	}
-
-	public void setImageList(List<Image> imageList) {
-		this.imageList = imageList;
-	}
 
 }

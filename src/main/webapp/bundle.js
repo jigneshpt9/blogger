@@ -10818,7 +10818,7 @@ var MainStore = function (_EventEmitter) {
     value: function fetchBlogs() {
       var _this2 = this;
 
-      (0, _ajax2.default)('GET', '', {}).then(function (response) {
+      (0, _ajax2.default)('GET', '/blog', {}).then(function (response) {
         _this2.blogs = response.data;
         _this2.emit('blogs_fetched');
       });
@@ -10830,10 +10830,10 @@ var MainStore = function (_EventEmitter) {
     }
   }, {
     key: 'login',
-    value: function login() {
+    value: function login(data) {
       var _this3 = this;
 
-      (0, _ajax2.default)('GET', '', {}).then(function (response) {
+      (0, _ajax2.default)('POST', '', data).then(function (response) {
         _this3.login = response.status;
         if (_this3.login === 'OK') {
           _this3.emit('login_done');
@@ -18946,7 +18946,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 
 exports.default = function (method, url, data) {
-  var baseUrl = "/bloggerworld/blogger/blog";
+  var baseUrl = "/bloggerworld/blogger";
   return (0, _axios2.default)({
     headers: {
       'Content-Type': 'application/json'

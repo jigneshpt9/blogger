@@ -7526,7 +7526,7 @@ var MainStore = function (_EventEmitter) {
     value: function fetchBlogs() {
       var _this2 = this;
 
-      (0, _ajax2.default)('GET', '/blog', {}).then(function (response) {
+      (0, _ajax2.default)('GET', '', {}).then(function (response) {
         _this2.blogs = response.data;
         _this2.emit('blogs_fetched');
       });
@@ -18996,7 +18996,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 
 exports.default = function (method, url, data) {
-  var baseUrl = "/bloggerworld/blogger";
+  var baseUrl = "/bloggerworld/blogger/blog";
   //  const baseUrl = "/blogger/blogger-world/blog";
   return (0, _axios2.default)({
     headers: {

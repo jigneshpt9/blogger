@@ -7537,26 +7537,16 @@ var MainStore = function (_EventEmitter) {
       return this.blogs;
     }
   }, {
-    key: 'postBlog',
-    value: function postBlog(data) {
-      var _this3 = this;
-
-      (0, _ajax2.default)('POST', '/blog', data).then(function (response) {
-        _this3.blogs = response.data;
-        _this3.emit('blog_posted');
-      });
-    }
-  }, {
     key: 'login',
     value: function login() {
-      var _this4 = this;
+      var _this3 = this;
 
       (0, _ajax2.default)('POST', '', data).then(function (response) {
-        _this4.login = response.status;
-        if (_this4.login === 'OK') {
-          _this4.emit('login_done');
+        _this3.login = response.status;
+        if (_this3.login === 'OK') {
+          _this3.emit('login_done');
         } else {
-          _this4.emit('login_failed');
+          _this3.emit('login_failed');
         }
       });
     }

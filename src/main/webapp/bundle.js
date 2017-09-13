@@ -19227,11 +19227,7 @@ var App = function (_React$Component) {
           _react2.default.createElement(
             _reactRouterDom.BrowserRouter,
             null,
-            _react2.default.createElement(
-              'div',
-              null,
-              _react2.default.createElement(_reactRouterDom.Route, { path: '/', component: _home2.default })
-            )
+            _react2.default.createElement(_reactRouterDom.Route, { path: '/', component: _home2.default })
           )
         )
       );

@@ -19173,7 +19173,7 @@ var App = function (_React$Component) {
             _reactRouterDom.BrowserRouter,
             null,
             _react2.default.createElement(
-              _reactRouterDom.Switch,
+              'div',
               null,
               _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/', component: _home2.default }),
               _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/addblog', component: _addblog2.default }),

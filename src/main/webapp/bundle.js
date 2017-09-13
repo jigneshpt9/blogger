@@ -19175,15 +19175,7 @@ var App = function (_React$Component) {
             _react2.default.createElement(
               'div',
               null,
-              _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/', component: _home2.default }),
-              _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/addblog', component: _addblog2.default }),
-              _react2.default.createElement(
-                _reactRouterDom.Link,
-                { to: '/addblog' },
-                ' ',
-                _react2.default.createElement(_RaisedButton2.default, { label: 'Add My Blog' }),
-                ' '
-              )
+              _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/', component: _home2.default })
             )
           )
         )

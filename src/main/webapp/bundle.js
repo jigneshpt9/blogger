@@ -19238,6 +19238,13 @@ var Home = function (_React$Component) {
         'div',
         null,
         _react2.default.createElement(
+          Link,
+          { style: addButtonStyle, to: '/bloggerworld/addblog' },
+          ' ',
+          _react2.default.createElement(RaisedButton, { label: 'Add Blog' }),
+          ' '
+        ),
+        _react2.default.createElement(
           _Grid.Grid,
           null,
           _react2.default.createElement(

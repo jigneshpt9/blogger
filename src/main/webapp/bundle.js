@@ -19181,7 +19181,7 @@ var App = function (_React$Component) {
                 _reactRouterDom.Link,
                 { to: '/addblog' },
                 ' ',
-                _react2.default.createElement(_RaisedButton2.default, { label: 'Add Blog' }),
+                _react2.default.createElement(_RaisedButton2.default, { label: 'Add My Blog' }),
                 ' '
               )
             )

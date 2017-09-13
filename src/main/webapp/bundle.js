@@ -19295,6 +19295,7 @@ var Home = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
+      var addButtonStyle = { float: 'right' };
       return _react2.default.createElement(
         'div',
         null,

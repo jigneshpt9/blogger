@@ -19175,7 +19175,7 @@ var App = function (_React$Component) {
             _react2.default.createElement(
               'div',
               null,
-              _react2.default.createElement(_reactRouterDom.Route, { path: '/', component: _home2.default })
+              _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/bloggerworld', component: _home2.default })
             )
           )
         )
@@ -19369,11 +19369,7 @@ var Home = function (_React$Component) {
       var _this3 = this;
 
       var list = this.state.list.map(function (item, index) {
-        return _react2.default.createElement(
-          _Grid.Cell,
-          { col: 3 },
-          _react2.default.createElement(_listComponent2.default, { key: index, onClick: _this3.blogSelected.bind(_this3, index), heading: item.title, content: item.content })
-        );
+        return _react2.default.createElement(_listComponent2.default, { key: index, onClick: _this3.blogSelected.bind(_this3, index), heading: item.title, content: item.content });
       });
       return list;
     }
@@ -19472,7 +19468,7 @@ var ListComponent = function (_React$Component) {
       var style = {
         paper: {
           height: 200,
-          width: "100%",
+          width: 350,
           margin: 20,
           float: "left",
           wordWrap: "break-word",

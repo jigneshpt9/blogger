@@ -19458,7 +19458,7 @@ var Home = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      var addButtonStyle = { float: 'right' };
+
       return _react2.default.createElement(
         'div',
         null,
@@ -19477,11 +19477,13 @@ var Home = function (_React$Component) {
           )
         ),
         _react2.default.createElement(
-          _reactRouterDom.Link,
-          { style: addButtonStyle, to: '/bloggerworld/addblog' },
-          ' ',
-          _react2.default.createElement(RaisedButton, { label: 'Add Blog' }),
-          ' '
+          'button',
+          null,
+          _react2.default.createElement(
+            _reactRouterDom.Link,
+            { to: '/bloggerworld/addblog' },
+            'Add Blog'
+          )
         )
       );
     }

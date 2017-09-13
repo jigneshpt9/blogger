@@ -19175,7 +19175,15 @@ var App = function (_React$Component) {
             _react2.default.createElement(
               'div',
               null,
-              _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/bloggerworld', component: _home2.default })
+              _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/bloggerworld', component: _home2.default }),
+              _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/bloggerworld/addblog', component: _addblog2.default }),
+              _react2.default.createElement(
+                _reactRouterDom.Link,
+                { to: '/bloggerworld/addblog' },
+                ' ',
+                _react2.default.createElement(_RaisedButton2.default, { label: 'Add Blog' }),
+                ' '
+              )
             )
           )
         )
@@ -19398,9 +19406,17 @@ var Home = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
+      var style = { float: 'right' };
       return _react2.default.createElement(
         'div',
         null,
+        _react2.default.createElement(
+          Link,
+          { style: style, to: '/bloggerworld/addblog' },
+          ' ',
+          _react2.default.createElement(RaisedButton, { label: 'Add Blog' }),
+          ' '
+        ),
         _react2.default.createElement(
           _Grid.Grid,
           null,

@@ -19458,17 +19458,10 @@ var Home = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      var style = { float: 'right' };
+      var addButtonStyle = { float: 'right' };
       return _react2.default.createElement(
         'div',
         null,
-        _react2.default.createElement(
-          _reactRouterDom.Link,
-          { style: style, to: '/bloggerworld/addblog' },
-          ' ',
-          _react2.default.createElement(RaisedButton, { label: 'Add Blog' }),
-          ' '
-        ),
         _react2.default.createElement(
           _Grid.Grid,
           null,
@@ -19482,6 +19475,13 @@ var Home = function (_React$Component) {
             { col: this.state.listCol },
             this.renderList()
           )
+        ),
+        _react2.default.createElement(
+          _reactRouterDom.Link,
+          { style: addButtonStyle, to: '/bloggerworld/addblog' },
+          ' ',
+          _react2.default.createElement(RaisedButton, { label: 'Add Blog' }),
+          ' '
         )
       );
     }

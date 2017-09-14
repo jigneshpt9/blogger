@@ -19206,7 +19206,7 @@ var App = function (_React$Component) {
           'div',
           null,
           _react2.default.createElement(_AppBar2.default, {
-            title: 'Blogger\'s World',
+            title: 'Blogger\'s WorlD ',
             onLeftIconButtonTouchTap: this.log,
             iconElementRight: this.setRightIcon()
             //  iconElementRight={<FlatButton label="Login"/>}

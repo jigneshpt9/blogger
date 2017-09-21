@@ -42,7 +42,7 @@ public class BlogOperationsRootResource {
 		// User userObject = userService.findUser(blog.getBlogOwner().getEmailId());
 		// blog.setBlogOwner(userObject);
 
-		if (null != blog || null != blog.getTitle() || blog.getTitle().isEmpty()) {
+		if (null == blog || null == blog.getTitle() || blog.getTitle().isEmpty()) {
 			logger.info("Tittle is empty block");
 			throw new BlogCreateException("Blog couldnot be created");
 		}

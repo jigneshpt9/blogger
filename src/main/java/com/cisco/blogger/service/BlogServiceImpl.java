@@ -13,7 +13,7 @@ public class BlogServiceImpl implements BlogService {
 	
 	private static BlogService blogService = null;
 
-    public BlogServiceImpl() {
+    private BlogServiceImpl() {
     	
     }
 
@@ -56,3 +56,4 @@ public class BlogServiceImpl implements BlogService {
 	}
 
 }
+

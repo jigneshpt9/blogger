@@ -1,5 +1,7 @@
 package com.cisco.blogger.data;
 
+import java.util.logging.Logger;
+
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Morphia;
 import org.mongodb.morphia.dao.BasicDAO;
@@ -16,8 +18,8 @@ public class UserDAOImpl extends BasicDAO<User, String> implements UserDAO {
 	static Datastore datastore = morphia.createDatastore(mongo, dbName);
 
 	private static UserDAO userDAO = null;
-
-	public UserDAOImpl() {
+	Logger logger = Logger.getLogger(getClass().getName());
+	private UserDAOImpl() {
 		this(User.class, datastore);
 	}
 
@@ -34,26 +36,34 @@ public class UserDAOImpl extends BasicDAO<User, String> implements UserDAO {
 
 	}
 
+	@Override
 	public void create(User user) {
-		datastore.save(user);
-		System.out.println("User registered");
+		save(user);
+		logger.info("User registered");
 	}
 
-	public User findUser(String emailId) {
+	@Override
+	public User validateUser(String emailId, String password) {
 
-		Query<User> userQueryDS = createQuery().field("emailId").equal(emailId);
+		Query<User> userQueryDS = createQuery().field("emailId").equal(emailId).field("password").equal(password);
 		User foundUser = userQueryDS.get();
 		return foundUser;
 	}
 
+	@Override
 	public void updateUser(User user) {
 		save(user);
 
 	}
 
-	public User validateUser(String emailId, String password) {
-		// TODO Auto-generated method stub
-		return null;
+	@Override
+	public User findUser(String emailId) {
+		Query<User> userQueryDS = createQuery().field("emailId").equal(emailId);
+		User foundUser = userQueryDS.get();
+		return foundUser;
 	}
 
 }
+
+
+

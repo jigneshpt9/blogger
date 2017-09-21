@@ -17,7 +17,7 @@ public class UserDAOImpl extends BasicDAO<User, String> implements UserDAO {
 
 	private static UserDAO userDAO = null;
 
-	private UserDAOImpl() {
+	public UserDAOImpl() {
 		this(User.class, datastore);
 	}
 

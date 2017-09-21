@@ -1,6 +1,7 @@
 package com.cisco.blogger.rs;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -14,36 +15,39 @@ import javax.ws.rs.core.Response;
 import com.cisco.blogger.api.Blog;
 import com.cisco.blogger.api.BlogCreateException;
 import com.cisco.blogger.api.BlogException;
+import com.cisco.blogger.api.BlogNotFoundException;
 import com.cisco.blogger.api.BlogUpdateException;
 import com.cisco.blogger.api.Comment;
 import com.cisco.blogger.api.User;
 import com.cisco.blogger.service.BlogService;
 import com.cisco.blogger.service.BlogServiceImpl;
+import com.cisco.blogger.service.JwtTokenNeeded;
 import com.cisco.blogger.service.UserService;
 import com.cisco.blogger.service.UserServiceImpl;
 
 @Path("/blog")
 public class BlogOperationsRootResource {
 
-	BlogService blogService =  BlogServiceImpl.getInstance();
-	UserService userService =  UserServiceImpl.getInstance();
+	BlogService blogService = BlogServiceImpl.getInstance();
+	UserService userService = UserServiceImpl.getInstance();
+
+	private Logger logger = Logger.getLogger(getClass().getName());
 
 	@POST
 	@Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+	@JwtTokenNeeded
 	public Response add(Blog blog) {
-		try {
-			User userObject = userService.findUser(blog.getBlogOwner().getEmailId());
-			blog.setBlogOwner(userObject);
-			String blogId = blogService.createBlog(blog);
 
-			return Response.ok().entity(blog).header("location", "/blogger/blog/view/" + blogId).build();
+		// User userObject = userService.findUser(blog.getBlogOwner().getEmailId());
+		// blog.setBlogOwner(userObject);
 
-		} catch (BlogCreateException bce) {
-			return Response.status(400).build();
-		} catch (BlogException be) {
-			return Response.status(500).build();
+		if (null != blog || null != blog.getTitle() || blog.getTitle().isEmpty()) {
+			logger.info("Tittle is empty block");
+			throw new BlogCreateException("Blog couldnot be created");
 		}
+		String blogId = blogService.createBlog(blog);
+		return Response.ok().entity(blog).header("location", "/blogger/blog/view/" + blogId).build();
 
 	}
 
@@ -51,23 +55,18 @@ public class BlogOperationsRootResource {
 	@Path("/{blogId}")
 	@Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+	@JwtTokenNeeded
 	public Response update(@PathParam("blogId") String blogId, Blog blog) {
-		try {
-			User userObject = userService.findUser(blog.getBlogOwner().getEmailId());
-			Blog blogUpdated = null;
-			if (null != userObject) {
-				blogService.updateBlog(blog);
-			} else {
-				throw new BlogUpdateException("No blog found in database");
-			}
 
-			return Response.ok().entity(blog).header("location", "/blogger/blog/view/" + blogUpdated.getId())
-					.build();
-		} catch (BlogUpdateException bue) {
-			return Response.status(400).build();
-		} catch (BlogException be) {
-			return Response.status(500).build();
+		User userObject = userService.findUser(blog.getBlogOwner().getEmailId());
+		Blog blogUpdated = null;
+		if (null != userObject) {
+			blogService.updateBlog(blog);
+		} else {
+			throw new BlogUpdateException("No user found in database");
 		}
+
+		return Response.ok().entity(blog).header("location", "/blogger/blog/view/" + blogUpdated.getId()).build();
 
 	}
 
@@ -76,16 +75,12 @@ public class BlogOperationsRootResource {
 	@Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	public Response getBlogById(@PathParam("blogId") String blogId) {
-		try {
-			Blog blog = blogService.getBlogById(blogId);
 
-			return Response.ok().entity(blog).build();
-
-		} catch (BlogCreateException bce) {
-			return Response.status(400).build();
-		} catch (BlogException be) {
-			return Response.status(500).build();
+		Blog blog = blogService.getBlogById(blogId);
+		if (null == blog) {
+			throw new BlogNotFoundException("Blog for the blogId doesnot exist");
 		}
+		return Response.ok().entity(blog).build();
 
 	}
 
@@ -93,16 +88,12 @@ public class BlogOperationsRootResource {
 	@Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	public Response listAllBlogs() {
-		try {
-			List<Blog> blogs = blogService.listAllBlogs();
 
-			return Response.ok().entity(blogs).build();
-
-		} catch (BlogCreateException bce) {
-			return Response.status(400).build();
-		} catch (BlogException be) {
-			return Response.status(500).build();
+		List<Blog> blogs = blogService.listAllBlogs();
+		if (null == blogs || blogs.isEmpty()) {
+			throw new BlogNotFoundException("Blogs for the keyword doesnot exist");
 		}
+		return Response.ok().entity(blogs).build();
 
 	}
 
@@ -126,22 +117,15 @@ public class BlogOperationsRootResource {
 
 	@POST
 	@Path("/comment/{blogId}")
+	@JwtTokenNeeded
 	@Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	public Response addComment(@PathParam("blogId") String blogId, Comment comment) {
-		try {
 
-			blogService.addComment(blogId, comment);
+		blogService.addComment(blogId, comment);
 
-			return Response.status(200).build();
-
-		} catch (BlogCreateException bce) {
-			return Response.status(400).build();
-		} catch (BlogException be) {
-			return Response.status(500).build();
-		}
+		return Response.status(200).build();
 
 	}
-	
 
 }

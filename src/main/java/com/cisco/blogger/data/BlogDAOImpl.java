@@ -15,8 +15,8 @@ import com.mongodb.MongoClient;
 public class BlogDAOImpl extends BasicDAO<Blog, String> implements BlogDAO {
 	private Logger logger = Logger.getLogger(getClass().getName());
 
-	private static String dbName = new String("BloggerDb2");
-	private static MongoClient mongo = new MongoClient("172.31.34.32");
+	private static String dbName = new String("BloggerDb");
+	private static MongoClient mongo = new MongoClient("localhost");
 	private static Morphia morphia = new Morphia();
 	private static Datastore datastore = morphia.createDatastore(mongo, dbName);
 

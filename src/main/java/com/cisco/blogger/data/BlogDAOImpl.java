@@ -52,11 +52,12 @@ public class BlogDAOImpl extends BasicDAO<Blog, String> implements BlogDAO {
 	@Override
 	public Blog getBlogById(String blogId) {
 		logger.info("getBlogById:"+ blogId);
+		List<Blog> blogSearchList = null;
 		Query<Blog> query = createQuery().field("id").contains(blogId);
-		Blog blog = query.get();
-		logger.info("Blog title:"+ blog.getTitle());
+		blogSearchList = query.asList();
+	
 		//Blog blog = get(blogId);
-		return blog;
+		return blogSearchList.get(0);
 	}
 
 	@Override

@@ -53,6 +53,7 @@ public class BlogDAOImpl extends BasicDAO<Blog, String> implements BlogDAO {
 	public Blog getBlogById(String blogId) {
 		Query<Blog> query = createQuery().field("content").contains(blogId);
 		Blog blog = query.get();
+		logger.info("Blog title:"+ blog.getTitle());
 		//Blog blog = get(blogId);
 		return blog;
 	}

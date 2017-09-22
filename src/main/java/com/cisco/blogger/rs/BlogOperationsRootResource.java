@@ -24,6 +24,7 @@ import com.cisco.blogger.service.BlogServiceImpl;
 import com.cisco.blogger.service.JwtTokenNeeded;
 import com.cisco.blogger.service.UserService;
 import com.cisco.blogger.service.UserServiceImpl;
+import com.mongodb.util.JSON;
 
 @Path("/blog")
 public class BlogOperationsRootResource {
@@ -121,7 +122,7 @@ public class BlogOperationsRootResource {
 	@Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	public Response addComment(@PathParam("blogId") String blogId, Comment comment) {
-
+		logger.info("in Root ressource addComment");
 		blogService.addComment(blogId, comment);
 
 		return Response.status(200).build();

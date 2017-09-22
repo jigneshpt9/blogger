@@ -89,6 +89,7 @@ public class BlogDAOImpl extends BasicDAO<Blog, String> implements BlogDAO {
 	@Override
 	public void addComment(String blogId, Comment comment) {
 		Blog blog = getBlogById(blogId);
+		logger.info("addComment DAO" + blog.getId());
 		List<Comment> comments = blog.getComments();
 
 		comments.add(comment);

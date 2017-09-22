@@ -55,7 +55,11 @@ public class BlogDAOImpl extends BasicDAO<Blog, String> implements BlogDAO {
 		List<Blog> blogSearchList = null;
 		Query<Blog> query = createQuery().field("id").contains(blogId);
 		blogSearchList = query.asList();
-	
+	    
+		if ( blogSearchList == null || blogSearchList.isEmpty())
+		{
+			logger.info("blogSearchList is empty");
+		}
 		//Blog blog = get(blogId);
 		return blogSearchList.get(0);
 	}

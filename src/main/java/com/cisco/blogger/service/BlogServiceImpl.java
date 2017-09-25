@@ -32,9 +32,9 @@ public class BlogServiceImpl implements BlogService {
 
 	}
 
-	public void updateBlog(Blog blog) {
-		blogDAO.updateBlog(blog);
-	}
+//	public void updateBlog(String blogId, Blog blog) {
+//		blogDAO.updateBlog(blogId,blog);
+//	}
 
 	public Blog getBlogById(String blogId) {
 		return blogDAO.getBlogById(blogId);

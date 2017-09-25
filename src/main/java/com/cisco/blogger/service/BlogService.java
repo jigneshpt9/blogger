@@ -9,7 +9,7 @@ public interface BlogService {
 	
 	public String createBlog(Blog blog);
 	
-	public void updateBlog(Blog blog);
+//	public void updateBlog(String blogId, Blog blog);
 	
 	public Blog getBlogById(String blogId);
 	public List<Blog> listAllBlogs();

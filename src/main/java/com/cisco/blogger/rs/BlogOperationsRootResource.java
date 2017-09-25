@@ -24,7 +24,6 @@ import com.cisco.blogger.service.BlogServiceImpl;
 import com.cisco.blogger.service.JwtTokenNeeded;
 import com.cisco.blogger.service.UserService;
 import com.cisco.blogger.service.UserServiceImpl;
-import com.mongodb.util.JSON;
 
 @Path("/blog")
 public class BlogOperationsRootResource {
@@ -52,24 +51,24 @@ public class BlogOperationsRootResource {
 
 	}
 
-	@POST
-	@Path("/{blogId}")
-	@Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	@JwtTokenNeeded
-	public Response update(@PathParam("blogId") String blogId, Blog blog) {
-
-		User userObject = userService.findUser(blog.getBlogOwner().getEmailId());
-		Blog blogUpdated = null;
-		if (null != userObject) {
-			blogService.updateBlog(blog);
-		} else {
-			throw new BlogUpdateException("No user found in database");
-		}
-
-		return Response.ok().entity(blog).header("location", "/blogger/blog/view/" + blogUpdated.getId()).build();
-
-	}
+//	@POST
+//	@Path("/{blogId}")
+//	@Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+//	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+//	//@JwtTokenNeeded
+//	public Response update(@PathParam("blogId") String blogId, Blog blog) {
+//
+//		User userObject = userService.findUser(blog.getBlogOwner().getEmailId());
+//		
+//		if (null != userObject) {
+//			blogService.updateBlog(blogId,blog);
+//		} else {
+//			throw new BlogUpdateException("No user found in database");
+//		}
+//
+//		return Response.ok().entity(blog).header("location", "/blogger/blog/view/" + blogId).build();
+//
+//	}
 
 	@GET
 	@Path("/view/{blogId}")
@@ -118,11 +117,11 @@ public class BlogOperationsRootResource {
 
 	@POST
 	@Path("/comment/{blogId}")
-	@JwtTokenNeeded
+	//@JwtTokenNeeded
 	@Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	public Response addComment(@PathParam("blogId") String blogId, Comment comment) {
-		logger.info("in Root ressource addComment:"+blogId);
+
 		blogService.addComment(blogId, comment);
 
 		return Response.status(200).build();

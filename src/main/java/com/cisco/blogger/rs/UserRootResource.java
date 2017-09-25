@@ -40,10 +40,10 @@ public class UserRootResource {
 	@Context
 	UriInfo uriInfo;
 	Logger logger = Logger.getLogger(getClass().getName());
+	
 	@POST
 	@Consumes({ MediaType.APPLICATION_JSON})
 	@Produces({ MediaType.APPLICATION_JSON})
-	@JwtTokenNeeded
 	public Response addUser(User user) {
 		 	
 			System.out.println("in addUser");

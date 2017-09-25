@@ -16,7 +16,7 @@ public class BlogDAOImpl extends BasicDAO<Blog, String> implements BlogDAO {
 	private Logger logger = Logger.getLogger(getClass().getName());
 
 	private static String dbName = new String("BloggerDb");
-	private static MongoClient mongo = new MongoClient("172.31.34.32");
+	private static MongoClient mongo = new MongoClient("localhost");
 	private static Morphia morphia = new Morphia();
 	private static Datastore datastore = morphia.createDatastore(mongo, dbName);
 
@@ -49,32 +49,28 @@ public class BlogDAOImpl extends BasicDAO<Blog, String> implements BlogDAO {
 
 	}
 
+	
+	
 	@Override
 	public Blog getBlogById(String blogId) {
-		logger.info("getBlogById: "+ blogId);
-		List<Blog> blogSearchList = null;
-		Query<Blog> query = createQuery().field("id").equal(blogId);
-		blogSearchList = query.asList();
-	    
-		if ( blogSearchList == null || blogSearchList.isEmpty())
-		{
-			logger.info("blogSearchList is empty");
-		}
-		//Blog blog = get(blogId);
-		return blogSearchList.get(0);
+	
+			Blog blog = findOne("_id",blogId);
+		
+		return blog;
 	}
 
-	@Override
-	public void updateBlog(Blog blog) {
-		Blog blogFound = getBlogById(blog.getId());
-		if (null != blogFound) {
-			logger.info("BlogUpdated-" + blog.getId());
-
-		} else {
-			logger.info("new blog inserted to DB through UPDATE process");
-		}
-		save(blog);
-	}
+//	@Override
+//	public void updateBlog(String blogId, Blog blog) {
+//		Blog blogFound = getBlogById(blogId);
+//		if (null != blogFound) {
+//			logger.info("BlogUpdated-" + blogId);
+//			save(blog);
+//		} else {
+//			logger.info("new blog inserted to DB through UPDATE process");
+//			save(blog);
+//		}
+//		
+//	}
 
 	@Override
 	public List<Blog> searchBlogs(String keyword) {
@@ -98,11 +94,10 @@ public class BlogDAOImpl extends BasicDAO<Blog, String> implements BlogDAO {
 	@Override
 	public void addComment(String blogId, Comment comment) {
 		Blog blog = getBlogById(blogId);
-		logger.info("addComment DAO" + blog.getId());
 		List<Comment> comments = blog.getComments();
 
 		comments.add(comment);
-		updateBlog(blog);
+		save(blog);
 
 	}
 

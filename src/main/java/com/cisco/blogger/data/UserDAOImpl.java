@@ -12,7 +12,7 @@ import com.mongodb.MongoClient;
 
 public class UserDAOImpl extends BasicDAO<User, String> implements UserDAO {
 
-	static String dbName = new String("BloggerDb2");
+	static String dbName = new String("BloggerDb");
 	static MongoClient mongo = new MongoClient("172.31.34.32");
 	static Morphia morphia = new Morphia();
 	static Datastore datastore = morphia.createDatastore(mongo, dbName);

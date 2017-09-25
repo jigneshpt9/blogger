@@ -52,7 +52,7 @@ public class BlogDAOImpl extends BasicDAO<Blog, String> implements BlogDAO {
 
 	
 	
-	
+	@Override
 	public Blog getBlogById(String blogId) {
 		
 		ObjectId id = new ObjectId(blogId);
@@ -79,7 +79,10 @@ public class BlogDAOImpl extends BasicDAO<Blog, String> implements BlogDAO {
 		logger.info("In search method for keyword:" + keyword);
 		List<Blog> blogSearchList = null;
 
-		Query<Blog> query = createQuery().field("content").contains(keyword);
+		Query<Blog> query = createQuery();
+		
+		query.or(query.criteria("content").contains(keyword),
+				query.criteria("title").contains(keyword));
 		blogSearchList = query.asList();
 
 		return blogSearchList;

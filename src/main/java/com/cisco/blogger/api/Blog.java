@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.bson.types.ObjectId;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
 import org.mongodb.morphia.annotations.PrePersist;
@@ -16,7 +17,7 @@ public class Blog {
 	
 	@Id
 	@Property("_id")
-	private String id;
+	private ObjectId _id;
 	private String title;
 	private Date lastUpdated;
 	private String content;
@@ -29,13 +30,19 @@ public class Blog {
         this.lastUpdated = new Date();
 }
 	
-	public String getId() {
-		return id;
+
+
+	public ObjectId get_id() {
+		return _id;
 	}
 
-	public void setBlogId(String id) {
-		this.id = id;
+
+
+	public void set_id(ObjectId _id) {
+		this._id = _id;
 	}
+
+
 
 	public String getTitle() {
 		return title;
@@ -79,15 +86,25 @@ public class Blog {
 	}
 
 	public List<Comment> getComments() {
-		if (null != comments)
-			return comments;
-		else
-			return new ArrayList<Comment>();
+		
+		return comments;
+		
 	}
 
 	public void setComments(List<Comment> comments) {
 		this.comments = comments;
 	}
-
-
+	
+	public void addComment(Comment comment) {
+		if(this.comments != null) {
+			this.comments.add(comment)
+;		} else {
+		this.comments = new ArrayList<Comment>();
+		this.comments.add(comment);
+	
+	}
 }
+	}
+
+
+

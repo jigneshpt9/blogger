@@ -16,9 +16,7 @@ import com.cisco.blogger.api.Blog;
 import com.cisco.blogger.api.BlogCreateException;
 import com.cisco.blogger.api.BlogException;
 import com.cisco.blogger.api.BlogNotFoundException;
-import com.cisco.blogger.api.BlogUpdateException;
 import com.cisco.blogger.api.Comment;
-import com.cisco.blogger.api.User;
 import com.cisco.blogger.service.BlogService;
 import com.cisco.blogger.service.BlogServiceImpl;
 import com.cisco.blogger.service.JwtTokenNeeded;
@@ -47,7 +45,7 @@ public class BlogOperationsRootResource {
 			throw new BlogCreateException("Blog couldnot be created");
 		}
 		String blogId = blogService.createBlog(blog);
-		return Response.ok().entity(blog).header("location", "/blogger/blog/view/" + blogId).build();
+		return Response.ok().entity(blog).header("location", "bloggerworld/blogger/blog/view/" + blogId).build();
 
 	}
 
@@ -117,7 +115,7 @@ public class BlogOperationsRootResource {
 
 	@POST
 	@Path("/comment/{blogId}")
-	//@JwtTokenNeeded
+	@JwtTokenNeeded
 	@Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	public Response addComment(@PathParam("blogId") String blogId, Comment comment) {

@@ -3,6 +3,7 @@ package com.cisco.blogger.data;
 import java.util.List;
 import java.util.logging.Logger;
 
+import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Morphia;
 import org.mongodb.morphia.dao.BasicDAO;
@@ -44,17 +45,18 @@ public class BlogDAOImpl extends BasicDAO<Blog, String> implements BlogDAO {
 	public String createBlog(Blog blog) {
 
 		save(blog);
-		System.out.println("BlogCreated" + blog.getId());
-		return blog.getId();
+		System.out.println("BlogCreated" + blog.get_id());
+		return blog.get_id().toString();
 
 	}
 
 	
 	
-	@Override
-	public Blog getBlogById(String blogId) {
 	
-			Blog blog = findOne("_id",blogId);
+	public Blog getBlogById(String blogId) {
+		
+		ObjectId id = new ObjectId(blogId);
+			Blog blog = findOne("_id",id);
 		
 		return blog;
 	}
@@ -93,10 +95,9 @@ public class BlogDAOImpl extends BasicDAO<Blog, String> implements BlogDAO {
 
 	@Override
 	public void addComment(String blogId, Comment comment) {
+		
 		Blog blog = getBlogById(blogId);
-		List<Comment> comments = blog.getComments();
-
-		comments.add(comment);
+		blog.addComment(comment);
 		save(blog);
 
 	}

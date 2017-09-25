@@ -64,6 +64,3 @@ public class UserDAOImpl extends BasicDAO<User, String> implements UserDAO {
 	}
 
 }
-
-
-

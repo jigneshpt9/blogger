@@ -20305,7 +20305,6 @@ var Home = function (_React$Component) {
       var _this3 = this;
 
       console.log(this.state.list);
-
       if (this.state.list == []) {
         return _react2.default.createElement(
           'div',

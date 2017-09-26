@@ -19802,7 +19802,7 @@ var App = function (_React$Component2) {
           'div',
           null,
           _react2.default.createElement(_AppBar2.default, {
-            title: 'Blogger\'s World....',
+            title: 'Blogger\'s World',
             onLeftIconButtonTouchTap: this.log,
             iconElementRight: this.setRightIcon()
 
@@ -20121,7 +20121,6 @@ var CommentBox = function (_React$Component3) {
   _createClass(CommentBox, [{
     key: '_getComments',
     value: function _getComments() {
-      console.log(this.props.commentsList);
       if (this.props.commentsList == null) {
         return _react2.default.createElement(
           'div',

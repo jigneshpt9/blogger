@@ -19994,10 +19994,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var Comment = function (_React$Component) {
   _inherits(Comment, _React$Component);
 
-  function Comment() {
+  function Comment(props) {
     _classCallCheck(this, Comment);
 
-    return _possibleConstructorReturn(this, (Comment.__proto__ || Object.getPrototypeOf(Comment)).apply(this, arguments));
+    return _possibleConstructorReturn(this, (Comment.__proto__ || Object.getPrototypeOf(Comment)).call(this, props));
   }
 
   _createClass(Comment, [{
@@ -20047,6 +20047,9 @@ var CommentForm = function (_React$Component2) {
         _this3.setState({
           error: 'Please login to post comment'
         });
+      });
+      _mainStore2.default.on('comment_posted', function () {
+        _this3._body.value = '';
       });
     }
   }, {
@@ -20098,7 +20101,7 @@ var CommentForm = function (_React$Component2) {
     value: function _handleSubmit(event) {
       event.preventDefault();
       var body = this._body;
-      if (body === null) return;
+      console.log(body.value);
       this.props.addComment(body.value);
     }
   }]);
@@ -20118,15 +20121,15 @@ var CommentBox = function (_React$Component3) {
   _createClass(CommentBox, [{
     key: '_getComments',
     value: function _getComments() {
-      console.log(this.props.comments);
-      if (this.props.comments == null) {
+      console.log(this.props.commentsList);
+      if (this.props.commentsList == null) {
         return _react2.default.createElement(
           'div',
           null,
           ' '
         );
       } else {
-        return this.props.comments.map(function (comment) {
+        return this.props.commentsList.map(function (comment) {
           return _react2.default.createElement(Comment, {
             key: comment.commentId,
             createdTime: comment.createdTime,
@@ -20150,10 +20153,10 @@ var CommentBox = function (_React$Component3) {
     key: '_addComment',
     value: function _addComment(body) {
       var commentNum;
-      if (this.props.comments == null) {
+      if (this.props.commentsList == null) {
         commentNum = 0;
       } else {
-        commentNum = this.props.comments.length + 1;
+        commentNum = this.props.commentsList.length + 1;
       }
       var comment = {
         commentId: commentNum,
@@ -20169,10 +20172,10 @@ var CommentBox = function (_React$Component3) {
     value: function render() {
       var comments = this._getComments();
       var commentCount;
-      if (this.props.comments == null) {
+      if (this.props.commentsList == null) {
         commentCount = 0;
       } else {
-        commentCount = this.props.comments.length;
+        commentCount = this.props.commentsList.length;
       }
       return _react2.default.createElement(
         'div',
@@ -20265,7 +20268,8 @@ var Home = function (_React$Component) {
       selectedBlog: null,
       refresh: false,
       signupSatus: '',
-      commentPosted: false
+      commentPosted: false,
+      timePassed: false
     };
     _mainStore2.default.fetchBlogs();
     return _this;
@@ -20281,15 +20285,24 @@ var Home = function (_React$Component) {
           list: _mainStore2.default.getBlogs()
         });
       });
+
       _mainStore2.default.on('comment_posted', function () {
-        console.log('comment posted');
+        console.log('from home comment posted');
         _mainStore2.default.fetchBlogs();
+        _this2.setState({
+          commentPosted: true,
+          list: _mainStore2.default.getBlogs()
+        });
       });
     }
+  }, {
+    key: 'ComponentDidMount',
+    value: function ComponentDidMount() {}
   }, {
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {
       _mainStore2.default.removeAllListeners('blogs_fetched');
+      _mainStore2.default.removeAllListeners('comment_posted');
     }
   }, {
     key: 'blogSelected',
@@ -20304,7 +20317,6 @@ var Home = function (_React$Component) {
     value: function renderList() {
       var _this3 = this;
 
-      console.log(this.state.list);
       if (this.state.list == []) {
         return _react2.default.createElement(
           'div',
@@ -20359,7 +20371,7 @@ var Home = function (_React$Component) {
               'Last updated :',
               this.state.list[this.state.selectedBlog].lastUpdated
             ),
-            _react2.default.createElement(_blogcomment2.default, { comments: this.state.list[this.state.selectedBlog].comments, blogId: this.state.list[this.state.selectedBlog]._id })
+            _react2.default.createElement(_blogcomment2.default, { commentsList: this.state.list[this.state.selectedBlog].comments, blogId: this.state.list[this.state.selectedBlog]._id })
           );
         }
       }

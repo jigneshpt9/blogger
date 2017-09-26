@@ -17,7 +17,7 @@ public class BlogDAOImpl extends BasicDAO<Blog, String> implements BlogDAO {
 	private Logger logger = Logger.getLogger(getClass().getName());
 
 	private static String dbName = new String("BloggerDb");
-	private static MongoClient mongo = new MongoClient("172.31.34.32");
+	private static MongoClient mongo = new MongoClient("localhost");
 	private static Morphia morphia = new Morphia();
 	private static Datastore datastore = morphia.createDatastore(mongo, dbName);
 
@@ -43,10 +43,11 @@ public class BlogDAOImpl extends BasicDAO<Blog, String> implements BlogDAO {
 
 	@Override
 	public String createBlog(Blog blog) {
-
+		ObjectId _id = new ObjectId();
+		blog.set_id(_id.toHexString());
 		save(blog);
-		System.out.println("BlogCreated" + blog.get_id());
-		return blog.get_id().toString();
+		logger.info("BlogCreated" + blog.get_id());
+		return blog.get_id();
 
 	}
 
@@ -55,8 +56,7 @@ public class BlogDAOImpl extends BasicDAO<Blog, String> implements BlogDAO {
 	@Override
 	public Blog getBlogById(String blogId) {
 		
-		ObjectId id = new ObjectId(blogId);
-			Blog blog = findOne("_id",id);
+			Blog blog = findOne("_id",blogId);
 		
 		return blog;
 	}
@@ -100,6 +100,7 @@ public class BlogDAOImpl extends BasicDAO<Blog, String> implements BlogDAO {
 	public void addComment(String blogId, Comment comment) {
 		
 		Blog blog = getBlogById(blogId);
+		logger.info(blog.get_id());
 		blog.addComment(comment);
 		save(blog);
 

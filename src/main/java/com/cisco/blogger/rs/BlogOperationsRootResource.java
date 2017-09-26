@@ -34,7 +34,7 @@ public class BlogOperationsRootResource {
 	@POST
 	@Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	@JwtTokenNeeded
+	//@JwtTokenNeeded
 	public Response add(Blog blog) {
 
 		// User userObject = userService.findUser(blog.getBlogOwner().getEmailId());
@@ -115,7 +115,7 @@ public class BlogOperationsRootResource {
 
 	@POST
 	@Path("/comment/{blogId}")
-	@JwtTokenNeeded
+//	@JwtTokenNeeded
 	@Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	public Response addComment(@PathParam("blogId") String blogId, Comment comment) {

@@ -19802,7 +19802,7 @@ var App = function (_React$Component2) {
           'div',
           null,
           _react2.default.createElement(_AppBar2.default, {
-            title: 'Blogger\'s World..',
+            title: 'Blogger\'s World - Demo',
             onLeftIconButtonTouchTap: this.log,
             iconElementRight: this.setRightIcon()
 
